@@ -10,7 +10,7 @@ class WebSocketService {
         this.isConnected = false;
     }
 
-    connect(token, serverUrl = '10.93.59.170:8000') {
+    connect(token, serverUrl = '192.168.29.91:8003') {
         // For Expo Go, use your computer's actual IP address
         // Find it with: ipconfig (Windows) or ifconfig (Mac/Linux)
         const wsUrl = `ws://${serverUrl}/ws/chat/?token=${token}`;

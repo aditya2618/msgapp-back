@@ -20,11 +20,22 @@ export default function LoginScreen({ navigation }) {
             const token = await apiService.getToken();
 
             // Connect WebSocket
+            console.log('🔌 Connecting WebSocket...');
             webSocketService.connect(token);
+
+            // Listen for connection status
+            webSocketService.on('connected', () => {
+                console.log('✅ WebSocket connected successfully!');
+            });
+
+            webSocketService.on('error', (error) => {
+                console.error('❌ WebSocket error:', error);
+            });
 
             Alert.alert('Success', 'Logged in successfully!');
             navigation.replace('ChatList');
         } catch (error) {
+            console.error('Login error:', error);
             Alert.alert('Login Failed', error.response?.data?.detail || 'Invalid credentials');
         } finally {
             setLoading(false);

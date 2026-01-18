@@ -60,7 +60,7 @@ export default function CreateGroupScreen({ navigation }) {
         setCreating(true);
         try {
             const participantIds = selectedUsers.map(u => u.id);
-            const chat = await apiService.createChat(participantIds, 'group', groupName.trim());
+            const chat = await apiService.createChat('group', participantIds, groupName.trim());
 
             navigation.navigate('Chat', {
                 chatId: chat.id,

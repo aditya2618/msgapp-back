@@ -265,6 +265,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             'message_id': str(message.id),
             'chat_id': str(message.chat_id),
             'sender_id': str(message.sender_id),
+            'sender_username': message.sender.username,  # Add sender username
             'message_type': message.message_type,
             'content': message.content,
             'file_id': str(message.file_id) if message.file_id else None,

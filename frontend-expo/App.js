@@ -7,6 +7,7 @@ import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
 import ChatListScreen from './src/screens/ChatListScreen';
 import NewChatScreen from './src/screens/NewChatScreen';
 import CreateGroupScreen from './src/screens/CreateGroupScreen';
+import ChatDetailsScreen from './src/screens/ChatDetailsScreen';
 import ChatScreen from './src/screens/ChatScreen';
 import { ActivityIndicator, View } from 'react-native';
 import apiService from './src/services/APIService';
@@ -88,6 +89,11 @@ export default function App() {
           options={({ route }) => ({
             title: route.params.chatName,
           })}
+        />
+        <Stack.Screen
+          name="ChatDetails"
+          component={ChatDetailsScreen}
+          options={{ title: 'Details' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

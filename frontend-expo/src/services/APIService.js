@@ -4,7 +4,7 @@ import axios from 'axios';
 
 // IMPORTANT: Replace with your computer's IP address
 // Find it with: ipconfig (Windows) or ifconfig (Mac/Linux)
-const BASE_URL = 'http://10.93.59.170:8000/api';
+const BASE_URL = 'http://192.168.29.91:8003/api';
 
 class APIService {
     constructor() {
@@ -108,12 +108,46 @@ class APIService {
         return response.data;
     }
 
-    async createChat(participantIds, chatType = 'private', name = null) {
+    async getChatMessages(chatId) {
+        const response = await this.axios.get(`/chat/chats/${chatId}/messages/`);
+        return response.data;
+    }
+
+    async markChatRead(chatId) {
+        const response = await this.axios.post(`/chat/chats/${chatId}/mark_read/`);
+        return response.data;
+    }
+
+    async createChat(type, participantIds, name = null) {
         const response = await this.axios.post('/chat/chats/', {
-            type: chatType,
+            type: type,
             name,
             participant_ids: participantIds,
         });
+        return response.data;
+    }
+
+    async updateChat(chatId, data) {
+        const response = await this.axios.patch(`/chat/chats/${chatId}/`, data);
+        return response.data;
+    }
+
+    async deleteChat(chatId) {
+        await this.axios.delete(`/chat/chats/${chatId}/`);
+    }
+
+    async leaveChat(chatId) {
+        const response = await this.axios.post(`/chat/chats/${chatId}/leave/`);
+        return response.data;
+    }
+
+    async addParticipants(chatId, userIds) {
+        const response = await this.axios.post(`/chat/chats/${chatId}/add_participants/`, { user_ids: userIds });
+        return response.data;
+    }
+
+    async removeParticipant(chatId, userId) {
+        const response = await this.axios.post(`/chat/chats/${chatId}/remove_participant/`, { user_id: userId });
         return response.data;
     }
 

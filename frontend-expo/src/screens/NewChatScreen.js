@@ -38,15 +38,17 @@ export default function NewChatScreen({ navigation }) {
     const handleCreateChat = async (user) => {
         setCreating(true);
         try {
-            const chat = await apiService.createChat([user.id], 'private');
+            const chat = await apiService.createChat('private', [user.id]);
             Alert.alert('Success', `Chat created with ${user.username}`);
             navigation.navigate('Chat', {
                 chatId: chat.id,
                 chatName: user.username
             });
         } catch (error) {
+            console.log('❌ Create chat error:', error.response?.status, error.response?.data);
             if (error.response?.status === 400) {
-                Alert.alert('Info', 'Chat might already exist. Check your chat list.');
+                // If the error message confirms it's a duplicate or validation error
+                Alert.alert('Info', 'Chat might already exist or invalid request.\nCheck console for details.');
             } else {
                 Alert.alert('Error', 'Failed to create chat');
             }
